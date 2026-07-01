@@ -3,6 +3,12 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- ===== Google Tag Manager (container snippet) =====
+     Paste your GTM <head> snippet here, from GTM Admin > Install Google Tag Manager.
+     This site already pushes these dataLayer events for your tags/triggers:
+     form_submit, phone_click, cta_click, division_select, estimate_calculated,
+     season_guide_view, job_application.
+===== End Google Tag Manager ===== -->
 <title>Commercial Landscaping Services | Sweetwater Landscapes — Triangle &amp; Wilmington, NC</title>
 <meta name="description" content="Landscape installation, lawn maintenance, irrigation, lighting, drainage and erosion control for commercial properties and HOAs across the Triangle and Wilmington, NC." />
 <link rel="canonical" href="https://tfarmonov.github.io/sweetwater/services.html" />
@@ -22,8 +28,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet" />
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link href="styles.css" rel="stylesheet" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Commercial Landscape Installation & Maintenance",
+  "provider": { "@type": "Organization", "name": "Sweetwater Landscapes", "url": "https://tfarmonov.github.io/sweetwater/" },
+  "areaServed": ["Raleigh NC", "Apex NC", "Cary NC", "Holly Springs NC", "Wilmington NC", "Castle Hayne NC"],
+  "serviceType": "Commercial landscaping",
+  "description": "Landscape installation, lawn maintenance, irrigation, landscape lighting, drainage and erosion control for commercial properties and HOAs."
+}
+</script>
 </head>
 <body>
+<!-- ===== Google Tag Manager (noscript) =====
+     Paste your GTM <body> noscript snippet here, immediately after the opening body tag.
+===== End Google Tag Manager (noscript) ===== -->
 
 <nav id="topnav">
   <div class="nav-inner">
@@ -39,15 +59,37 @@
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="services.html" aria-current="page">Services</a></li>
-      <li><a href="fencing.html">Fencing</a></li>
+      <li class="has-drop">
+        <a href="services.html" aria-current="page">Services</a>
+        <ul class="drop">
+          <li><a href="services.html" aria-current="page">Landscaping services</a></li>
+          <li><a href="fencing.html">Fencing</a></li>
+          <li><a href="plans.html">Plans &amp; pricing</a></li>
+          <li><a href="industries.html">Industries we serve</a></li>
+        </ul>
+      </li>
       <li><a href="photos.html">Gallery</a></li>
-      <li><a href="team.html">Our team</a></li>
-      <li><a href="reviews.html">Reviews</a></li>
+      <li class="has-drop">
+        <a href="team.html">Company</a>
+        <ul class="drop">
+          <li><a href="team.html">Our team</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </li>
+      <li class="has-drop">
+        <a href="resources.html">Resources</a>
+        <ul class="drop">
+          <li><a href="resources.html">Seasonal guides</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="portal.html">Client portal</a></li>
+        </ul>
+      </li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="nav-cta">
       <a class="nav-phone" href="tel:9193877103">919-387-7103</a>
+      <a class="nav-quote" href="plans.html#estimate">Instant estimate</a>
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M2 4.5h14M2 9h14M2 13.5h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
       </button>
@@ -55,11 +97,20 @@
   </div>
   <div id="mobile-menu">
     <a href="index.html">Home</a>
-    <a href="services.html" aria-current="page">Services</a>
+    <span class="menu-label">Services</span>
+    <a href="services.html" aria-current="page">Landscaping services</a>
     <a href="fencing.html">Fencing</a>
+    <a href="plans.html">Plans &amp; pricing</a>
+    <a href="industries.html">Industries we serve</a>
     <a href="photos.html">Gallery</a>
+    <span class="menu-label">Company</span>
     <a href="team.html">Our team</a>
     <a href="reviews.html">Reviews</a>
+    <a href="careers.html">Careers</a>
+    <span class="menu-label">Resources</span>
+    <a href="resources.html">Seasonal guides</a>
+    <a href="faq.html">FAQ</a>
+    <a href="portal.html">Client portal</a>
     <a href="contact.html">Contact</a>
   </div>
 </nav>
@@ -155,22 +206,49 @@
 </main>
 
 <footer>
-  <div class="wrap footer-inner">
-    <div class="footer-brand">
-      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M3 15c3-3 4 3 7 0s4-5 7-2 3 3 5 1" stroke="#dbe8de" stroke-width="1.8" stroke-linecap="round"/></svg>
-      <strong>Sweetwater Landscapes</strong>
+  <div class="wrap footer-grid">
+    <div class="footer-col footer-about">
+      <div class="footer-brand">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M3 15c3-3 4 3 7 0s4-5 7-2 3 3 5 1" stroke="#dbe8de" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <strong>Sweetwater Landscapes</strong>
+      </div>
+      <p>Commercial landscaping, grounds maintenance, and fencing across the Triangle and Wilmington, NC since 2003.</p>
+      <p class="footer-nap"><strong>Triangle — Apex</strong><br/>2807 Highway 751, Apex, NC 27523<br/><a href="tel:9193877103">919-387-7103</a></p>
+      <p class="footer-nap"><strong>Eastern NC — Castle Hayne</strong><br/>4300 Castle Hayne Rd, Castle Hayne, NC 28429<br/><a href="tel:9106231262">910-623-1262</a></p>
     </div>
-    <ul class="footer-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="fencing.html">Fencing</a></li>
-      <li><a href="team.html">Our team</a></li>
-      <li><a href="reviews.html">Reviews</a></li>
-    </ul>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html">Landscaping services</a></li>
+        <li><a href="fencing.html">Fencing</a></li>
+        <li><a href="plans.html">Plans &amp; pricing</a></li>
+        <li><a href="industries.html">Industries we serve</a></li>
+        <li><a href="photos.html">Project gallery</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="team.html">Our team</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="resources.html">Seasonal guides</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="portal.html">Client portal</a></li>
+        <li><a href="plans.html#estimate">Instant estimate</a></li>
+        <li><a href="sitemap.xml">Site map</a></li>
+      </ul>
+    </div>
   </div>
   <div class="wrap footer-base">
-    <span>&copy; 2026 Sweetwater Landscapes. All rights reserved.</span>
-    <span><a href="sitemap.xml">Site map</a> &nbsp;·&nbsp; <a href="mailto:info@sweetwaternc.com">info@sweetwaternc.com</a></span>
+    <span>&copy; 2026 Sweetwater Landscapes. All rights reserved. NC Registered Landscape Contractor &middot; NC Licensed Irrigation Contractor</span>
+    <span><a href="mailto:info@sweetwaternc.com">info@sweetwaternc.com</a></span>
   </div>
 </footer>
 
