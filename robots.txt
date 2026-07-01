@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tfarmonov.github.io/sweetwater/sitemap.xml
