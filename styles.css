@@ -1067,3 +1067,16 @@ footer{ background:var(--pine-deep); color:#dbe8de; }
 @media (max-width:1000px){ .footer-grid{ grid-template-columns:1fr 1fr 1fr; } }
 @media (max-width:700px){ .footer-grid{ grid-template-columns:1fr 1fr; } }
 @media (max-width:480px){ .footer-grid{ grid-template-columns:1fr; } }
+
+/* ---------- BRAND LOGO ---------- */
+.brand-logo{
+  height:44px;
+  width:auto;
+  display:block;
+}
+@media (max-width:640px){ .brand-logo{ height:36px; } }
+.footer-logo{
+  height:44px;
+  width:auto;
+  display:block;
+}
