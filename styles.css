@@ -87,9 +87,8 @@ img{ max-width:100%; display:block; }
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:16px 32px;
-  max-width:1180px;
-  margin:0 auto;
+  gap:16px;
+  padding:16px 24px;
 }
 @media (max-width:640px){ .nav-inner{ padding:14px 20px; } }
 .brand{
@@ -97,6 +96,7 @@ img{ max-width:100%; display:block; }
   align-items:center;
   gap:10px;
   text-decoration:none;
+  flex-shrink:0;
 }
 .brand-mark{ flex-shrink:0; color:var(--pine); }
 .brand-text{ display:flex; flex-direction:column; line-height:1.1; }
@@ -122,6 +122,7 @@ img{ max-width:100%; display:block; }
 }
 .nav-links a{
   text-decoration:none;
+  white-space:nowrap;
   font-size:14.5px;
   font-weight:500;
   color:var(--ink-soft);
@@ -146,7 +147,7 @@ img{ max-width:100%; display:block; }
   color:var(--ink-soft);
   display:none;
 }
-@media (min-width:900px){ .nav-phone{ display:inline; } }
+@media (min-width:1280px){ .nav-phone{ display:inline; } }
 .nav-toggle{
   display:none;
   background:none;
@@ -158,6 +159,9 @@ img{ max-width:100%; display:block; }
   justify-content:center;
   cursor:pointer;
   flex-shrink:0;
+}
+@media (max-width:1200px) and (min-width:901px){
+  .nav-links a{ padding:9px 10px; font-size:14px; }
 }
 @media (max-width:900px){
   .nav-links{ display:none; }
@@ -467,6 +471,7 @@ footer{ background:var(--pine-deep); color:#dbe8de; }
 .drop a:hover{ background:var(--accent-soft); }
 .nav-quote{
   display:none;
+  white-space:nowrap;
   font-size:13.5px;
   font-weight:600;
   text-decoration:none;

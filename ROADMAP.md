@@ -14,6 +14,7 @@ Live site: https://tfarmonov.github.io/sweetwater/
 - Two variants: `images/logo.svg` (color, used in the site header on all 16 pages) and `images/logo-white.svg` (paper-tone, used in the dark footer).
 - `favicon.svg` replaced with the new sprout icon square.
 - `images/og-card.png` social card regenerated around the new logo.
+- Header made full-bleed: the logo now sits flush against the left edge of the viewport (nav links center, contact CTAs right), with nowrap + tightened mid-width breakpoints so nothing collides between 900–1280px.
 - Note: the wordmark is set in a bold grotesque that closely matches the supplied art; if the business has the original vector/font files, drop-in replace `images/logo.svg` and `images/logo-white.svg` to use them exactly.
 
 ### 2026-07-30 — Phase 3: Case studies, sustainability, service areas + site-wide imagery
