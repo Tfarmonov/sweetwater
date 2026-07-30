@@ -970,3 +970,100 @@ footer{ background:var(--pine-deep); color:#dbe8de; }
 .breadcrumbs a:hover{ color:#fff; }
 .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
 @media (max-width:860px){ .two-col{ grid-template-columns:1fr; } }
+
+/* ==================================================================
+   PHASE 3 — illustration integration, case studies, service areas
+   ================================================================== */
+.page-scene{
+  width:100%;
+  aspect-ratio:16/6.5;
+  object-fit:cover;
+  border-radius:var(--radius-lg);
+  border:1px solid var(--line);
+  box-shadow:var(--shadow-card);
+  display:block;
+}
+@media (max-width:640px){ .page-scene{ aspect-ratio:16/10; } }
+.card-scene{
+  width:calc(100% + 60px);
+  margin:-32px -30px 22px;
+  aspect-ratio:16/6;
+  object-fit:cover;
+  border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+  display:block;
+}
+.gallery-tile img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.scrim{
+  background:linear-gradient(180deg, rgba(21,36,32,0) 42%, rgba(21,36,32,0.78) 100%);
+}
+.ba-layer{ background-size:cover; background-position:center; }
+
+/* ---------- CASE STUDIES ---------- */
+.case-list{ display:flex; flex-direction:column; gap:34px; }
+.case-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);
+  overflow:hidden;
+}
+.case-img{
+  width:100%;
+  aspect-ratio:16/6;
+  object-fit:cover;
+  display:block;
+  border-bottom:1px solid var(--line-soft);
+}
+@media (max-width:640px){ .case-img{ aspect-ratio:16/9; } }
+.case-body{ padding:32px 36px 34px; }
+@media (max-width:560px){ .case-body{ padding:24px 22px; } }
+.case-body h3{ font-size:24px; margin:0 0 6px; }
+.case-body h4{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  font-weight:500;
+  color:var(--gold-deep);
+  margin:20px 0 6px;
+}
+.case-body p{ font-size:15px; color:var(--ink-soft); margin:0; max-width:72ch; }
+.case-metrics{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin:24px 0 20px;
+}
+@media (max-width:720px){ .case-metrics{ grid-template-columns:repeat(2,1fr); } }
+.case-metric{
+  background:var(--paper-dim);
+  border:1px solid var(--line-soft);
+  border-radius:var(--radius-md);
+  padding:14px 16px;
+}
+.case-metric strong{
+  display:block;
+  font-family:'Fraunces',serif;
+  font-size:24px;
+  font-weight:600;
+  color:var(--pine-deep);
+}
+.case-metric span{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* ---------- FOOTER 5-COL ---------- */
+.footer-grid{ grid-template-columns:1.5fr 1fr 1fr 1fr 1fr; }
+@media (max-width:1000px){ .footer-grid{ grid-template-columns:1fr 1fr 1fr; } }
+@media (max-width:700px){ .footer-grid{ grid-template-columns:1fr 1fr; } }
+@media (max-width:480px){ .footer-grid{ grid-template-columns:1fr; } }

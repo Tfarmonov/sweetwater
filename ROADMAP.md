@@ -8,6 +8,23 @@ Live site: https://tfarmonov.github.io/sweetwater/
 
 ## Change log
 
+### 2026-07-30 — Phase 3: Case studies, sustainability, service areas + site-wide imagery
+
+**New pages**
+- `case-studies.html` — Three metric-driven case studies (coastal HOA recovery, corporate campus 28% water reduction, 214-lot builder development) with challenge/approach/result structure and stat tiles.
+- `sustainability.html` — Water stewardship, IPM, native/pollinator plantings, battery-equipment pilot; the page national commercial players (BrightView, Davey) lead with.
+- `service-areas.html` — Custom NC service-region map, town-by-town coverage chips for both regions, and City-level `areaServed` structured data (local SEO).
+
+**Imagery**
+- Built an original SVG illustration system (`images/`): 13 scene illustrations (entrance, before/after pair, mowing, irrigation, mulch, wood/aluminum fencing, crew, campus, pollinator garden, stormwater pond, community street) plus a custom NC service map — all in the brand palette, generated programmatically for consistency.
+- **Why illustrations, not stock photos:** this build environment's network policy blocks all stock-photo hosts (Unsplash, Pexels, Wikimedia, Openverse), so no photography could be downloaded. All artwork is original (zero licensing risk). Every image sits in a normal `<img>`/background slot with descriptive alt text — drop real photos over the same filenames and the whole site updates.
+- Generated `images/og-card.png` (1200×630) and wired `og:image` + `twitter:card summary_large_image` on every page for social sharing.
+- Integrated site-wide: hero-adjacent scene banners on 7 pages, gallery tiles replaced with captioned images, before/after slider now uses matching before/after scenes, homepage division cards got image headers.
+
+**Navigation**
+- Re-grouped nav for 16 pages: Services (5), Work (Gallery / Case studies / Reviews), Company (Team / Sustainability / Careers), Resources (3); footer expanded to five columns.
+- Sitemap expanded to 16 URLs.
+
 ### 2026-07-01 — Phase 2: Scale-up feature build
 
 Modeled on the feature sets of national landscaping leaders (BrightView, Yellowstone Landscape, TruGreen) while keeping the site's unique topographic/waterline design language.
@@ -50,7 +67,7 @@ Modeled on the feature sets of national landscaping leaders (BrightView, Yellows
 - [ ] **Google Tag Manager**: create a GTM container, then paste the two snippets into the marked comment blocks on each page (head snippet + body noscript snippet). The dataLayer events listed above are already firing.
 - [ ] **Google Search Console**: verify the site and submit `sitemap.xml`.
 - [ ] **Google Business Profile**: link the two office profiles; update the review-page `g.page` links if they change.
-- [ ] Replace gallery placeholder tiles and the before/after slider panels with real project photography.
+- [ ] Replace the illustrated scenes in `images/` with real project photography (keep the same filenames and every page updates automatically; keep dimensions near 1200×750).
 - [ ] Wire the contact / careers forms to a real backend (Formspree, Netlify Forms, or a small API) — they are front-end demos right now.
 - [ ] If a custom domain (e.g., sweetwaternc.com) is adopted: add a `CNAME` file and find-replace `https://tfarmonov.github.io/sweetwater` across all pages + sitemap.
 
