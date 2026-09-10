@@ -8,6 +8,14 @@ Live site: https://tfarmonov.github.io/sweetwater/
 
 ## Change log
 
+### 2026-09-10 — Phase 6: Scheduler backend (notifications, confirmations, double-booking prevention)
+
+- Built a complete scheduling backend as a Google Apps Script web app (`backend/scheduler-apps-script.gs`): every request is stored in an auto-created "Sweetwater Service Requests" Google Sheet, the ownership group is emailed on each booking (fence requests also notify the fence list), and the requester receives a confirmation email with a booking reference. Slot capacity is enforced server-side inside a script lock, so simultaneous submissions can never double-book a window; setting a row's Status to Cancelled/Declined frees its window.
+- `schedule.html` now checks live availability as the visitor picks a date/division (booked windows grey out with a hint line), handles the just-taken race with a clear retry message, shows a real booking reference + "confirmation email sent" on success, and includes a spam honeypot. With no API URL configured it falls back to the previous demo behavior.
+- Verified with 27 backend logic tests (mocked Google services) and an 8-scenario browser end-to-end suite against a mock API, including the concurrent double-booking race.
+- **One owner action required to go live** (~10 minutes, free): deploy the script under the business Google account and paste the web-app URL into the marked `SCHED_API` line in `schedule.html` — full steps in `SETUP-SCHEDULER.md`.
+
+
 ### 2026-09-10 — Phase 5: v3 re-skin, official logos, Service Scheduler
 
 - **Full UI/UX re-skin to the approved sweetwater_v3 design**: DM Serif Display / Syne / DM Sans typography, near-black ink surfaces, grass-green + sky-blue palette, square buttons, mist section backgrounds, dark forms, grass ticker band. The whole design system was rebuilt in `styles.css` while keeping every page's markup and SEO infrastructure (canonicals, OG, schema, GTM slots) intact; legacy CSS variable names are aliased to the new palette so older inline styles keep resolving.
@@ -88,7 +96,8 @@ Modeled on the feature sets of national landscaping leaders (BrightView, Yellows
 - [ ] **Google Search Console**: verify the site and submit `sitemap.xml`.
 - [ ] **Google Business Profile**: link the two office profiles; update the review-page `g.page` links if they change.
 - [ ] Replace the illustrated scenes in `images/` with real project photography (keep the same filenames and every page updates automatically; keep dimensions near 1200×750).
-- [ ] Wire the contact / careers forms to a real backend (Formspree, Netlify Forms, or a small API) — they are front-end demos right now.
+- [ ] **Activate the Service Scheduler backend** — deploy `backend/scheduler-apps-script.gs` and paste the URL into `schedule.html` (see `SETUP-SCHEDULER.md`). Until then the scheduler is in demo mode.
+- [ ] Wire the contact / careers forms to a real backend — the scheduler's Apps Script pattern can be extended to them.
 - [ ] If a custom domain (e.g., sweetwaternc.com) is adopted: add a `CNAME` file and find-replace `https://tfarmonov.github.io/sweetwater` across all pages + sitemap.
 
 ## Planned next (Phase 3 candidates)

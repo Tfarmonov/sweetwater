@@ -193,6 +193,7 @@
               <span class="slot-chip"><input type="radio" name="slot" id="slot-3" value="Afternoon 2-5"><label for="slot-3">Afternoon · 2&ndash;5</label></span>
               <span class="slot-chip"><input type="radio" name="slot" id="slot-4" value="First available"><label for="slot-4">First available</label></span>
             </div>
+            <p class="slot-hint" id="slot-hint" role="status"></p>
           </div>
           <div class="field-grid">
             <div class="field">
@@ -214,6 +215,10 @@
               <input type="text" id="sched-prop" name="property" placeholder="Willow Creek HOA, Apex" required />
             </div>
           </div>
+          <div style="position:absolute;left:-9999px;" aria-hidden="true">
+            <label for="sched-website">Website</label>
+            <input type="text" id="sched-website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
           <div class="field">
             <label for="sched-notes">Anything the crew should know? (optional)</label>
             <textarea id="sched-notes" name="notes" placeholder="Gate codes to coordinate, problem areas, board meeting deadlines..."></textarea>
@@ -224,7 +229,10 @@
           </div>
           <div id="form-success" role="status">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="flex-shrink:0;margin-top:1px;"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10.5l2.5 2.5L14 7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span>Request received &mdash; <strong id="success-slot">your slot</strong> is on hold. We'll confirm within one business day. Existing clients can track this visit in the <a href="portal.html" style="color:inherit;">client portal</a>.</span>
+            <span id="sched-success-msg">Request received.</span>
+          </div>
+          <div id="form-error" role="alert">
+            <span id="sched-error-msg"></span>
           </div>
         </form>
       </div>
@@ -326,31 +334,152 @@
 
 <script src="site.js"></script>
 <script>
-  (function(){
-    var date = document.getElementById('sched-date');
-    var d = new Date(); d.setDate(d.getDate() + 1);
-    date.min = d.toISOString().split('T')[0];
-    var form = document.getElementById('schedForm');
-    var success = document.getElementById('form-success');
-    var successSlot = document.getElementById('success-slot');
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      if(!form.checkValidity()){ form.reportValidity(); return; }
-      var slot = form.querySelector('input[name="slot"]:checked');
-      var division = form.querySelector('input[name="division"]:checked');
-      successSlot.textContent = (date.value || 'your date') + ' \u00b7 ' + (slot ? slot.value : '');
-      success.classList.add('show');
-      success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+/* ============================================================
+   SERVICE SCHEDULER BACKEND HOOK-UP
+   Deploy backend/scheduler-apps-script.gs as a Google Apps
+   Script web app (steps in SETUP-SCHEDULER.md), then paste the
+   Web app URL (ends in /exec) between the quotes below.
+   Empty string = demo mode: no email is sent, no slot is held,
+   and availability is not checked.
+   ============================================================ */
+var SCHED_API = ""; /* <-- PASTE YOUR APPS SCRIPT WEB APP URL HERE */
+
+(function(){
+  var form = document.getElementById('schedForm');
+  var date = document.getElementById('sched-date');
+  var hint = document.getElementById('slot-hint');
+  var success = document.getElementById('form-success');
+  var successMsg = document.getElementById('sched-success-msg');
+  var errorBox = document.getElementById('form-error');
+  var errorMsg = document.getElementById('sched-error-msg');
+  var submitBtn = form.querySelector('.btn-submit');
+  var REAL_SLOTS = ['Morning 8-11','Midday 11-2','Afternoon 2-5'];
+
+  var d = new Date(); d.setDate(d.getDate() + 1);
+  date.min = d.toISOString().split('T')[0];
+  var dmax = new Date(); dmax.setDate(dmax.getDate() + 120);
+  date.max = dmax.toISOString().split('T')[0];
+
+  function val(name){
+    var el = form.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : '';
+  }
+  function setSlotDisabled(value, disabled){
+    var input = Array.prototype.find.call(form.querySelectorAll('input[name="slot"]'), function(i){ return i.value === value; });
+    if(!input) return;
+    input.disabled = disabled;
+    if(disabled && input.checked){
+      var open = form.querySelector('input[name="slot"]:not(:disabled)');
+      if(open) open.checked = true;
+    }
+  }
+  function hide(el){ el.classList.remove('show'); }
+
+  /* -------- live availability (double-booking prevention) -------- */
+  var availSeq = 0;
+  function refreshAvailability(){
+    if(!SCHED_API){ return; }
+    REAL_SLOTS.forEach(function(s){ setSlotDisabled(s, false); });
+    if(!date.value){ hint.textContent = ''; return; }
+    var seq = ++availSeq;
+    hint.textContent = 'Checking availability…';
+    fetch(SCHED_API + '?action=availability&date=' + encodeURIComponent(date.value))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if(seq !== availSeq) return;
+        if(!res.ok){ hint.textContent = ''; return; }
+        var full = (res.full && res.full[val('division')]) || [];
+        REAL_SLOTS.forEach(function(s){ setSlotDisabled(s, full.indexOf(s) >= 0); });
+        hint.textContent = full.length
+          ? 'Greyed-out windows are already booked for this date.'
+          : 'All windows are open on this date.';
+      })
+      .catch(function(){
+        if(seq !== availSeq) return;
+        hint.textContent = "Couldn't check availability — you can still send the request.";
+      });
+  }
+  date.addEventListener('change', refreshAvailability);
+  form.querySelectorAll('input[name="division"]').forEach(function(r){
+    r.addEventListener('change', refreshAvailability);
+  });
+
+  /* -------- submit -------- */
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    hide(success); hide(errorBox);
+    if(!form.checkValidity()){ form.reportValidity(); return; }
+    var payload = {
+      division: val('division') || 'Landscaping',
+      service: document.getElementById('sched-service').value,
+      type: document.getElementById('sched-type').value,
+      date: date.value,
+      slot: val('slot'),
+      name: document.getElementById('sched-name').value,
+      phone: document.getElementById('sched-phone').value,
+      email: document.getElementById('sched-email').value,
+      property: document.getElementById('sched-prop').value,
+      notes: document.getElementById('sched-notes').value,
+      website: document.getElementById('sched-website').value
+    };
+
+    function track(){
       if(window.swTrack){
         window.swTrack('service_scheduled', {
-          division: division ? division.value : 'Landscaping',
-          service: document.getElementById('sched-service').value,
-          slot: slot ? slot.value : '',
-          date: date.value
+          division: payload.division, service: payload.service,
+          slot: payload.slot, date: payload.date
         });
       }
-    });
-  })();
+    }
+    function showSuccess(html){
+      successMsg.innerHTML = html;
+      success.classList.add('show');
+      success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    function showError(text){
+      errorMsg.textContent = text;
+      errorBox.classList.add('show');
+      errorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    if(!SCHED_API){
+      /* Demo mode: no backend configured yet. */
+      showSuccess('Request received — <strong>' + payload.date + ' · ' + payload.slot +
+        '</strong> is noted. We’ll confirm within one business day. Existing clients can track visits in the <a href="portal.html" style="color:inherit;">client portal</a>.');
+      track();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    var oldLabel = submitBtn.textContent;
+    submitBtn.textContent = 'Requesting…';
+    fetch(SCHED_API, { method: 'POST', body: JSON.stringify(payload) })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if(res.ok){
+          showSuccess('Booked on hold — <strong>' + payload.date + ' · ' + payload.slot +
+            '</strong> (ref ' + (res.id || 'received') + '). A confirmation email is on its way to <strong>' +
+            payload.email + '</strong>, and our team will confirm within one business day.');
+          track();
+          refreshAvailability();
+        } else if(res.error === 'slot_taken'){
+          showError('That window was just taken by another booking — please pick a different window or date.');
+          refreshAvailability();
+        } else if(res.error === 'busy_try_again'){
+          showError('The scheduler is busy — please try again in a few seconds.');
+        } else {
+          showError('Something in the form was rejected (' + (res.error || 'unknown') + '). Please check the fields, or call 919-387-7103.');
+        }
+      })
+      .catch(function(){
+        showError("We couldn't reach the scheduler — please try again, or call 919-387-7103 and we'll book it by phone.");
+      })
+      .finally(function(){
+        submitBtn.disabled = false;
+        submitBtn.textContent = oldLabel;
+      });
+  });
+})();
 </script>
 </body>
 </html>
