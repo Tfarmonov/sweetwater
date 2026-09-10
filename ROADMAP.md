@@ -8,6 +8,17 @@ Live site: https://tfarmonov.github.io/sweetwater/
 
 ## Change log
 
+### 2026-09-10 — Phase 5: v3 re-skin, official logos, Service Scheduler
+
+- **Full UI/UX re-skin to the approved sweetwater_v3 design**: DM Serif Display / Syne / DM Sans typography, near-black ink surfaces, grass-green + sky-blue palette, square buttons, mist section backgrounds, dark forms, grass ticker band. The whole design system was rebuilt in `styles.css` while keeping every page's markup and SEO infrastructure (canonicals, OG, schema, GTM slots) intact; legacy CSS variable names are aliased to the new palette so older inline styles keep resolving.
+- **Official logo rollout**: the real Sweetwater Landscapes and Sweetwater Fence logos (extracted from the v3 file, transparent PNG) now anchor the dark navigation — Landscapes left, Fence right — and the footer. OG card regenerated around the real logo.
+- **Homepage rebuilt to the v3 layout**: split hero (dark left pane + green/blue gradient right with floating office/ranking cards and pull-quote), "Serving NC Since 2001" pulse tag, and the **#83 award band**.
+- **New `schedule.html` — Service Scheduler** (requested feature): pick division, service, property type, preferred date, and an arrival window (slot chips); posts a `service_scheduled` dataLayer event. Wired into the nav CTA ("Schedule Service"), Services menu, and footer. Front-end demo pending backend wiring, like the other forms.
+- **Client Portal** (requested feature) re-skinned to match; portal cross-linked from the scheduler flow.
+- **Content facts updated site-wide per v3**: founded 2001 (was 2003), 150+ professionals (was 120+), #83 privately-owned ranking added, Apex HQ now 86 Beaver Creek Road, Apex NC 27502, fence division contact Kevin Papushak (216) 401-5022, office hours added, and the HOA/commercial-only **service disclaimer strip** now appears above the footer on every page. Structured data (foundingDate, addresses) and the FAQ answers updated to match.
+- Illustration set re-paletted to the new brand colors; sitemap expanded to 17 URLs.
+
+
 ### 2026-07-30 — Phase 4: Official logo rollout
 
 - Recreated the supplied Sweetwater Landscapes logo as clean transparent-background vector art (no photo background, per owner request): blue→green gradient rounded-square sprout icon + blue "SWEETWATER / LANDSCAPES" wordmark, with all lettering converted to SVG paths so it renders identically on every device with no font dependency.
