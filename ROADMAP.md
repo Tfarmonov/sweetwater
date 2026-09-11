@@ -8,6 +8,10 @@ Live site: https://tfarmonov.github.io/sweetwater/
 
 ## Change log
 
+### 2026-09-11 — Residential scope cleanup
+
+- Removed remaining residential-landscaping implications: contact form's property type now reads "Residential (fencing only)", team-page crew copy says commercial/HOA/grounds work, and the Estate plan card drops private-estate framing. The FAQ now states the split explicitly: landscaping is HOA/commercial/multi-unit only, while the fencing division does serve residential (Kevin Papushak). All fencing-division residential mentions were intentionally kept.
+
 ### 2026-09-10 — Phase 6: Scheduler backend (notifications, confirmations, double-booking prevention)
 
 - Built a complete scheduling backend as a Google Apps Script web app (`backend/scheduler-apps-script.gs`): every request is stored in an auto-created "Sweetwater Service Requests" Google Sheet, the ownership group is emailed on each booking (fence requests also notify the fence list), and the requester receives a confirmation email with a booking reference. Slot capacity is enforced server-side inside a script lock, so simultaneous submissions can never double-book a window; setting a row's Status to Cancelled/Declined frees its window.
